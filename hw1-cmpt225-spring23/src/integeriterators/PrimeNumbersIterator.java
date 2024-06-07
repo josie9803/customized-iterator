@@ -8,7 +8,7 @@ public class PrimeNumbersIterator implements IntegerIterator {
 	}
 	
 	public PrimeNumbersIterator(int n) {
-		if (isNotPrime(n)){
+		if (!isPrime(n)){
 			initialValue = getNextPrime(n);
 		}
 		else {
@@ -34,12 +34,12 @@ public class PrimeNumbersIterator implements IntegerIterator {
 	}
 	private Integer getNextPrime(int n){
 		int nextNumber = n + 1;
-		while (isNotPrime(nextNumber)) {
+		while (!isPrime(nextNumber)) {
 			nextNumber++;
 		}
 		return nextNumber;
 	}
-	private boolean isNotPrime(int n){
+	private boolean isPrime(int n){
 		if (n <= 1){
 			return false;
 		}

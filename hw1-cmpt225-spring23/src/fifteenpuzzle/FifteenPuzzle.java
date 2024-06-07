@@ -11,6 +11,7 @@ public class FifteenPuzzle {
 
 	// size of board
 	public final static int SIZE = 4;
+	int[][] board;
 
 	
 	/**
@@ -21,6 +22,26 @@ public class FifteenPuzzle {
 	 */
 	public FifteenPuzzle(String fileName) throws IOException, BadBoardException {
 		// TODO implement me
+		board = new int[SIZE][SIZE];
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			String line;
+			int row = 0;
+			while ((line = br.readLine()) != null && row < 4) {
+				String[] values = line.trim().split("\\s+"); // split by whitespace
+				for (int col = 0; col < values.length && col < 4; col++) {
+					if (!values[col].isEmpty()) {
+						board[row][col] = Integer.parseInt(values[col]);
+					} else {
+						System.out.println("hello empty");
+						board[row][col] = 0;
+					}
+				}
+				row++;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		printBoard();
 	}
 
 	
@@ -47,6 +68,31 @@ public class FifteenPuzzle {
 	public String toString() {
 		// TODO Auto-generated method stub
 		// TODO implement me
-		return super.toString();
+		StringBuilder result = new StringBuilder();
+        for (int[] row : board) {
+            for (int j = 0; j < row.length; j++) {
+                int col = row[j];
+				if (col == 0){
+					continue;
+				}
+                if (col < 10) {
+                    result.append(" ");
+                }
+				result.append(col);
+                if (j < row.length - 1) {
+                    result.append("\t");
+                }
+            }
+            result.append("\n");
+        }
+		return result.toString();
+	}
+	private void printBoard(){
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				System.out.print(board[i][j] + "\t");
+			}
+			System.out.println();
+		}
 	}
 }
